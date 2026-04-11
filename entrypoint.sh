@@ -3,10 +3,8 @@ set -e
 
 echo "Starting Laravel application..."
 
-# Create .env directly if not exists
-if [ ! -f /app/.env ]; then
-    echo "Creating .env file..."
-    cat > /app/.env << 'EOF'
+# Create .env directly
+cat > /app/.env << 'EOF'
 APP_NAME=Laravel
 APP_ENV=production
 APP_KEY=
@@ -28,9 +26,8 @@ QUEUE_CONNECTION=sync
 FILESYSTEM_DISK=local
 MAIL_MAILER=log
 EOF
-fi
 
-# Always generate key (safe to run even if already set)
+# Generate APP_KEY
 echo "Generating APP_KEY..."
 php artisan key:generate --force
 
@@ -45,11 +42,9 @@ mkdir -p storage/framework/sessions \
 chmod -R 775 storage bootstrap/cache
 
 # Create SQLite database file
-if [ ! -f /app/database/database.sqlite ]; then
-    echo "Creating SQLite database..."
-    touch /app/database/database.sqlite
-fi
+touch /app/database/database.sqlite
 
+# Cache config AFTER key is generated
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
