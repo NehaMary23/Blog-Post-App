@@ -12,3 +12,6 @@ docker-compose.yml
 storage/logs
 bootstrap/cache
 vendor
+entrypoint.sh
+build.sh
+DEPLOY.md

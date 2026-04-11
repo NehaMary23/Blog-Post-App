@@ -22,10 +22,6 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copy project files
 COPY . .
 
-# Copy entrypoint script
-COPY entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
-
 # Set permissions BEFORE composer install
 RUN mkdir -p storage/framework/sessions \
              storage/framework/views \
@@ -45,5 +41,8 @@ EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:8000/ || exit 1
 
-# Run entrypoint
-ENTRYPOINT ["/app/entrypoint.sh"]
+# Run migrations and start server
+CMD sh -c "cp -n .env.example .env 2>/dev/null || true && \
+    php artisan key:generate --force && \
+    php artisan migrate --force --no-interaction && \
+    php artisan serve --host=0.0.0.0 --port=8000"
