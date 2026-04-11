@@ -26,14 +26,17 @@ COPY . .
 COPY entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
-# Install PHP dependencies - skip scripts during build
+# Set permissions BEFORE composer install
+RUN mkdir -p storage/framework/sessions \
+             storage/framework/views \
+             storage/framework/cache \
+             storage/logs \
+             bootstrap/cache \
+             database \
+    && chmod -R 775 storage bootstrap/cache
+
+# Install PHP dependencies
 RUN composer install --no-interaction --optimize-autoloader --no-dev --no-scripts
-
-# Set permissions
-RUN chmod -R 755 storage bootstrap/cache
-
-# Create database directory
-RUN mkdir -p database
 
 # Expose port
 EXPOSE 8000
