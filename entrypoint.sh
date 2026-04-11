@@ -30,11 +30,9 @@ MAIL_MAILER=log
 EOF
 fi
 
-# Generate APP_KEY if empty
-if ! grep -q "^APP_KEY=.\+" /app/.env; then
-    echo "Generating APP_KEY..."
-    php artisan key:generate --force
-fi
+# Always generate key (safe to run even if already set)
+echo "Generating APP_KEY..."
+php artisan key:generate --force
 
 # Ensure directories exist
 mkdir -p storage/framework/sessions \
