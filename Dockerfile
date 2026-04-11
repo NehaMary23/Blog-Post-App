@@ -1,4 +1,4 @@
-FROM php:8.3-fpm
+FROM php:8.3-cli
 
 # Set working directory
 WORKDIR /app
@@ -10,10 +10,11 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     sqlite3 \
+    libsqlite3-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo pdo_sqlite
+RUN docker-php-ext-install pdo pdo_sqlite bcmath
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -22,20 +23,23 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY . .
 
 # Install PHP dependencies
-RUN composer install --optimize-autoloader --no-dev
+RUN composer install --no-interaction --optimize-autoloader --no-dev
 
 # Set permissions
-RUN chown -R www-data:www-data /app/storage /app/bootstrap/cache
+RUN chmod -R 755 storage bootstrap/cache
 
-# Create database directory and file
-RUN mkdir -p database && touch database/database.sqlite
+# Create database if it doesn't exist
+RUN mkdir -p database && ls -la database/
 
-# Generate application key if not exists
-RUN if [ ! -f .env ]; then cp .env.example .env; fi
-RUN php artisan key:generate
+# Generate key and migrate on startup
+RUN php artisan key:generate --force || true
 
 # Expose port
 EXPOSE 8000
 
-# Run migrations and start server
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8000/ || exit 1
+
+# Start server
 CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000

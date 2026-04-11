@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: crud-app
+    runtime: docker
+    plan: free
+    healthCheckPath: /
+    
+    envVars:
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_ENV
+        value: production
+      - key: LOG_CHANNEL
+        value: stdout
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: DB_DATABASE
+        value: /app/database/database.sqlite
+
+    dockerfilePath: ./Dockerfile
+    
+    # Auto-deploy on push to main
+    autoDeploy: true
