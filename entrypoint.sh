@@ -1,16 +1,37 @@
-#!/bin/bash
+﻿#!/bin/bash
 set -e
 
 echo "Starting Laravel application..."
 
-# Ensure .env exists
-if [ ! -f .env ]; then
+# Create .env directly if not exists
+if [ ! -f /app/.env ]; then
     echo "Creating .env file..."
-    cp .env.example .env
+    cat > /app/.env << 'EOF'
+APP_NAME=Laravel
+APP_ENV=production
+APP_KEY=
+APP_DEBUG=false
+APP_URL=http://localhost
+
+LOG_CHANNEL=stack
+LOG_LEVEL=debug
+
+DB_CONNECTION=sqlite
+DB_DATABASE=/app/database/database.sqlite
+
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+
+CACHE_STORE=file
+QUEUE_CONNECTION=sync
+
+FILESYSTEM_DISK=local
+MAIL_MAILER=log
+EOF
 fi
 
-# Generate APP_KEY if not set or empty
-if ! grep -q "^APP_KEY=.\+" .env; then
+# Generate APP_KEY if empty
+if ! grep -q "^APP_KEY=.\+" /app/.env; then
     echo "Generating APP_KEY..."
     php artisan key:generate --force
 fi
@@ -25,27 +46,19 @@ mkdir -p storage/framework/sessions \
 
 chmod -R 775 storage bootstrap/cache
 
-# Create SQLite database file if not exists
+# Create SQLite database file
 if [ ! -f /app/database/database.sqlite ]; then
     echo "Creating SQLite database..."
     touch /app/database/database.sqlite
 fi
 
-# Set correct SQLite path in .env
-sed -i 's|DB_DATABASE=.*|DB_DATABASE=/app/database/database.sqlite|' .env
-
-# Cache config
-echo "Caching configuration..."
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
-# Run migrations
 echo "Running migrations..."
 php artisan migrate --force --no-interaction
 
-# Run discovery
-echo "Discovering packages..."
 php artisan package:discover --ansi || true
 
 echo "Starting server..."
