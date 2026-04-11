@@ -16,14 +16,15 @@
 2. Set the **Build Command**: `composer install && php artisan key:generate --force`
 3. Set the **Start Command**: `php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000`
 4. Add Environment Variables:
-   - `APP_ENV=production`
-   - `APP_DEBUG=false`
-   - `DB_CONNECTION=sqlite`
-   - `LOG_CHANNEL=stdout`
+    - `APP_ENV=production`
+    - `APP_DEBUG=false`
+    - `DB_CONNECTION=sqlite`
+    - `LOG_CHANNEL=stdout`
 
 ### Environment Variables Setup
 
 Add these in Render Dashboard:
+
 ```
 APP_ENV=production
 APP_DEBUG=false
@@ -48,17 +49,19 @@ Access at `http://localhost:8000`
 ## Troubleshooting
 
 ### Build Fails
+
 - Check that all dependencies in `composer.json` are compatible
 - Ensure PHP 8.3 is used
 - Verify all system extensions are installed
 
 ### Database Issues
+
 - SQLite database is auto-created during migration
 - Check file permissions on `/app/database` directory
 - Render's free tier uses ephemeral storage; database resets on redeploy
 
 ### Cold Start Issues
+
 - Free tier services sleep after 15 minutes
 - First request may take 30+ seconds
 - This is normal behavior on Render's free plan
-

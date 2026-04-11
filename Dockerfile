@@ -22,17 +22,18 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copy project files
 COPY . .
 
-# Install PHP dependencies
-RUN composer install --no-interaction --optimize-autoloader --no-dev
+# Copy entrypoint script
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
+# Install PHP dependencies - skip scripts during build
+RUN composer install --no-interaction --optimize-autoloader --no-dev --no-scripts
 
 # Set permissions
 RUN chmod -R 755 storage bootstrap/cache
 
-# Create database if it doesn't exist
-RUN mkdir -p database && ls -la database/
-
-# Generate key and migrate on startup
-RUN php artisan key:generate --force || true
+# Create database directory
+RUN mkdir -p database
 
 # Expose port
 EXPOSE 8000
@@ -41,5 +42,5 @@ EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:8000/ || exit 1
 
-# Start server
-CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000
+# Run entrypoint
+ENTRYPOINT ["/app/entrypoint.sh"]
