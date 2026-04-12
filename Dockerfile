@@ -43,16 +43,14 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
 
 # Run migrations and start server
 CMD sh -c "if [ ! -f .env ]; then \
-    if [ -f .env.example ]; then \
-      cp .env.example .env; \
-    else \
-      echo 'APP_NAME=Laravel' > .env; \
-      echo 'APP_ENV=production' >> .env; \
-      echo 'APP_DEBUG=false' >> .env; \
-      echo 'DB_CONNECTION=sqlite' >> .env; \
-      echo 'DB_DATABASE=/app/database/database.sqlite' >> .env; \
-    fi; \
+    echo 'APP_NAME=Laravel' > .env; \
+    echo 'APP_ENV=production' >> .env; \
+    echo 'APP_DEBUG=false' >> .env; \
+    echo 'DB_CONNECTION=sqlite' >> .env; \
+    echo 'DB_DATABASE=/app/database/database.sqlite' >> .env; \
+    echo \"APP_KEY=${APP_KEY}\" >> .env; \
+    echo 'SESSION_DRIVER=file' >> .env; \
+    echo 'CACHE_STORE=file' >> .env; \
   fi && \
-  php artisan key:generate --force && \
   php artisan migrate --force --no-interaction && \
   php artisan serve --host=0.0.0.0 --port=8000"
