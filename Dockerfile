@@ -57,6 +57,7 @@ CMD sh -c "if [ ! -f .env ]; then \
     echo 'DB_CONNECTION=sqlite' >> .env; \
     echo 'DB_DATABASE=/app/database/database.sqlite' >> .env; \
     echo \"APP_KEY=${APP_KEY}\" >> .env; \
+    echo \"APP_URL=${APP_URL}\" >> .env; \
     echo 'SESSION_DRIVER=file' >> .env; \
     echo 'CACHE_STORE=file' >> .env; \
   fi && \
