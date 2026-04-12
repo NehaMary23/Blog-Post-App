@@ -34,6 +34,14 @@ RUN mkdir -p storage/framework/sessions \
 # Install PHP dependencies
 RUN composer install --no-interaction --optimize-autoloader --no-dev --no-scripts
 
+# Install Node.js
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
+
+# Build frontend assets
+COPY package*.json ./
+RUN npm install
+RUN npm run build
 # Expose port
 EXPOSE 8000
 
