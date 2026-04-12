@@ -151,6 +151,83 @@ label {
     }
 }
 
+@media (max-width: 480px) {
+    .container {
+        width: 95vw !important;
+        max-width: 320px !important;
+        margin-top: 10%;
+        margin-bottom: 5%;
+    }
+    
+    .container .left {
+        padding: 30px 20px;
+        padding-top: 50px;
+    }
+
+    .container .right {
+        padding: 30px 20px;
+    }
+    
+    .container .left h3 {
+        font-size: 1.1rem;
+    }
+    
+    .container .left p {
+        font-size: 0.9rem;
+    }
+    
+    .container h4 {
+        font-size: 1.1rem;
+    }
+    
+    label {
+        font-size: 14px;
+        margin-top: 12px;
+    }
+    
+    .input-container {
+        margin-left: 0;
+        max-width: none;
+    }
+    
+    .input-container input {
+        font-size: 13px;
+        padding: 8px 8px 8px 30px;
+    }
+    
+    .container .right .btn {
+        padding: 6px 12px !important;
+        font-size: 14px;
+    }
+    
+    .container .left .btn {
+        padding: 4px 15px !important;
+        font-size: 13px;
+    }
+    
+    .new {
+        margin-top: 5%;
+    }
+    
+    .new p {
+        margin-top: 10%;
+        font-size: 12px;
+    }
+    
+    .forgot {
+        margin-right: 0;
+    }
+    
+    .forgot a {
+        font-size: 11px;
+    }
+    
+    .image {
+        margin-left: 0;
+        margin-top: 1%;
+    }
+}
+
 .image {
     margin-left: 8%;
     margin-top: 2%;

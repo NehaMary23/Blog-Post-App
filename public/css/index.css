@@ -152,3 +152,88 @@ body {
     padding-left: 1%;
 }
 
+@media (max-width: 480px) {
+    .header {
+        padding: 8px 5px;
+    }
+    
+    .header h1 {
+        font-size: 1.1rem;
+        padding: 0.5rem 0;
+    }
+    
+    .header button {
+        border-radius: 6px;
+        padding: 4px 8px;
+        margin-top: 3px;
+        font-size: 12px;
+    }
+    
+    .posts {
+        width: 95%;
+        padding: 15px;
+        margin-top: 1rem;
+        border-radius: 20px;
+    }
+    
+    .atag {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .post-action {
+        gap: 1rem;
+        padding: 0.75rem;
+    }
+    
+    .post {
+        width: 100%;
+        padding: 15px;
+        border-radius: 15px;
+    }
+    
+    .post img {
+        height: 120px;
+    }
+    
+    .post h4 {
+        font-size: 1rem;
+        margin: 0.5rem 0;
+    }
+    
+    .post p {
+        font-size: 0.85rem;
+    }
+    
+    .post .btn {
+        padding: 6px 10px;
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+    
+    .search {
+        margin-top: 1rem;
+        padding: 0 5px;
+    }
+    
+    .search input {
+        margin: 0 2px;
+        padding: 6px 8px;
+        font-size: 13px;
+    }
+    
+    .search button {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+    
+    .pagination {
+        font-size: 12px;
+    }
+    
+    .pagination .page-link {
+        padding: 3px 6px;
+        font-size: 12px;
+    }
+}
+

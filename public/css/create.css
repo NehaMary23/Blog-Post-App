@@ -123,3 +123,72 @@ textarea::placeholder {
 .btn {
     margin-top: 2% !important;
 }
+
+@media (max-width: 480px) {
+    .header {
+        padding: 8px 5px;
+    }
+    
+    .header h1 {
+        font-size: 1.1rem;
+        padding: 0.5rem 0;
+    }
+    
+    .header button {
+        border-radius: 6px;
+        padding: 4px 8px;
+        margin-top: 3px;
+        font-size: 12px;
+    }
+    
+    .posts {
+        width: 95%;
+        padding: 15px;
+        margin-top: 1rem;
+        border-radius: 20px;
+    }
+    
+    label {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+    
+    textarea {
+        max-width: 100%;
+        width: 100%;
+        height: 80px;
+        border-radius: 15px;
+        padding: 8px 8px 5px 10px;
+        font-size: 13px;
+    }
+    
+    input {
+        max-width: 100%;
+        width: 100%;
+        height: 36px;
+        border-radius: 15px;
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+    
+    input::placeholder,
+    textarea::placeholder {
+        font-size: 13px;
+        padding: 0;
+    }
+    
+    .image {
+        margin-left: 0;
+        margin-top: 1rem;
+    }
+    
+    .error-text {
+        font-size: 11px;
+    }
+    
+    .btn {
+        margin-top: 1rem !important;
+        padding: 8px 12px !important;
+        font-size: 14px;
+    }
+}
