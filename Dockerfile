@@ -34,6 +34,9 @@ RUN mkdir -p storage/framework/sessions \
 # Install PHP dependencies
 RUN composer install --no-interaction --optimize-autoloader --no-dev --no-scripts
 
+# Generate APP_KEY
+RUN php artisan key:generate --force
+
 # Install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
@@ -42,12 +45,19 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
 COPY package*.json ./
 RUN npm install
 RUN npm run build
+
+# Run migrations
+RUN php artisan migrate --force
+
 # Expose port
 EXPOSE 8000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:8000/ || exit 1
+
+# Start Laravel server
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
 
 # Run migrations and start server
 CMD sh -c "if [ ! -f .env ]; then \

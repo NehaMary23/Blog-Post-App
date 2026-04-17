@@ -6,6 +6,8 @@ services:
     healthCheckPath: /
 
     envVars:
+      - key: APP_NAME
+        value: "Blog Post App"
       - key: APP_DEBUG
         value: "false"
       - key: APP_ENV
@@ -16,6 +18,12 @@ services:
         value: sqlite
       - key: DB_DATABASE
         value: /app/database/database.sqlite
+      - key: SESSION_DRIVER
+        value: cookie
+      - key: SESSION_LIFETIME
+        value: "120"
+      - key: CACHE_STORE
+        value: file
 
     dockerfilePath: ./Dockerfile
 
