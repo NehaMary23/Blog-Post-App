@@ -29,7 +29,7 @@ RUN mkdir -p storage/framework/sessions \
              storage/logs \
              bootstrap/cache \
              database \
-    && chmod -R 775 storage bootstrap/cache
+    && chmod -R 777 storage bootstrap/cache database
 
 # Install PHP dependencies
 RUN composer install --no-interaction --optimize-autoloader --no-dev
@@ -37,12 +37,23 @@ RUN composer install --no-interaction --optimize-autoloader --no-dev
 # Create minimal .env for key generation
 RUN echo 'APP_NAME="Blog Post App"' > .env && \
     echo 'APP_ENV=production' >> .env && \
-    echo 'APP_DEBUG=false' >> .env && \
+    echo 'APP_DEBUG=true' >> .env && \
     echo 'DB_CONNECTION=sqlite' >> .env && \
+    echo 'DB_DATABASE=database/database.sqlite' >> .env && \
     echo 'SESSION_DRIVER=cookie' >> .env
 
 # Generate APP_KEY
 RUN php artisan key:generate --force
+
+# Create entrypoint script
+RUN echo '#!/bin/sh' > /entrypoint.sh && \
+    echo 'cd /app' >> /entrypoint.sh && \
+    echo 'touch database/database.sqlite' >> /entrypoint.sh && \
+    echo 'chmod -R 777 storage bootstrap/cache database' >> /entrypoint.sh && \
+    echo 'php artisan config:cache' >> /entrypoint.sh && \
+    echo 'php artisan migrate --force --no-interaction' >> /entrypoint.sh && \
+    echo 'php artisan serve --host=0.0.0.0 --port=8000' >> /entrypoint.sh && \
+    chmod +x /entrypoint.sh
 
 # Expose port
 EXPOSE 8000
@@ -51,5 +62,5 @@ EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:8000/ || exit 1
 
-# Start Laravel server with migrations
-CMD ["sh", "-c", "php artisan migrate --force --no-interaction && php artisan serve --host=0.0.0.0 --port=8000"]
+# Start Laravel server
+CMD ["/entrypoint.sh"]
