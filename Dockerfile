@@ -35,7 +35,7 @@ RUN mkdir -p storage/framework/sessions \
 RUN composer install --no-interaction --optimize-autoloader --no-dev
 
 # Create minimal .env for key generation
-RUN echo 'APP_NAME=Blog Post App' > .env && \
+RUN echo 'APP_NAME="Blog Post App"' > .env && \
     echo 'APP_ENV=production' >> .env && \
     echo 'APP_DEBUG=false' >> .env && \
     echo 'DB_CONNECTION=sqlite' >> .env && \
