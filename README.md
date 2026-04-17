@@ -54,6 +54,8 @@ php artisan serve
 * Account visibilty to every user
 * Advanced search and filtering
 
+## 🎥 Demo
+https://github.com/user-attachments/assets/b30152c7-9ae9-4216-b77d-c5e8f96deef3
 ---
 
 💡 This project highlights backend development skills, database handling, and building real-world CRUD applications using Laravel.
