@@ -57,6 +57,7 @@ php artisan serve
 ## 🎥 Demo
 
 https://github.com/user-attachments/assets/0e6e6e14-0039-443e-be1c-6b2de81b6fcd
+
 ---
 
 💡 This project highlights backend development skills, database handling, and building real-world CRUD applications using Laravel.
