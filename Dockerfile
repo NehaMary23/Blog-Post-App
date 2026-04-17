@@ -34,6 +34,9 @@ RUN mkdir -p storage/framework/sessions \
 # Install PHP dependencies
 RUN composer install --no-interaction --optimize-autoloader --no-dev --no-scripts
 
+# Create .env file from .env.example
+RUN cp .env.example .env
+
 # Generate APP_KEY
 RUN php artisan key:generate --force
 
