@@ -55,7 +55,8 @@ php artisan serve
 * Advanced search and filtering
 
 ## 🎥 Demo
-https://github.com/user-attachments/assets/b30152c7-9ae9-4216-b77d-c5e8f96deef3
+
+https://github.com/user-attachments/assets/0e6e6e14-0039-443e-be1c-6b2de81b6fcd
 ---
 
 💡 This project highlights backend development skills, database handling, and building real-world CRUD applications using Laravel.
